@@ -6,7 +6,6 @@ public class Scaler : MonoBehaviour
 
     private void Update()
     {
-        Vector3 scaleChange = Vector3.one * _scaleSpeed * Time.deltaTime;
-        transform.localScale += scaleChange;
+        transform.localScale += Vector3.one * _scaleSpeed * Time.deltaTime;
     }
 }
