@@ -4,10 +4,16 @@ public class Scaler : MonoBehaviour
 {
     [SerializeField] private float _scaleSpeed;
 
+    private Vector3 _scaleChange;
+
+    private void Awake()
+    {
+        float scaleValue = _scaleSpeed * Time.deltaTime;
+        _scaleChange = new Vector3(scaleValue, scaleValue, scaleValue);
+    }
+
     private void Update()
     {
-        Vector3 scaleChange = new Vector3(_scaleSpeed, _scaleSpeed, _scaleSpeed);
-
-        transform.localScale += scaleChange;
+        transform.localScale += _scaleChange;
     }
 }
