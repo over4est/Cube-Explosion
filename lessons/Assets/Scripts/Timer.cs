@@ -7,7 +7,7 @@ public class Timer : MonoBehaviour
     [SerializeField] TextMeshProUGUI _text;
 
     private float _currentValue;
-    private float _increaseStep = 1f;
+    private float _incrementStep = 1f;
     private float _startValue = 0f;
     private float _delay = 0.5f;
     private bool _isWorking = false;
@@ -43,7 +43,7 @@ public class Timer : MonoBehaviour
         {
             DisplayValue(_currentValue);
 
-            _currentValue += _increaseStep;
+            _currentValue += _incrementStep;
 
             yield return wait;
         }
