@@ -9,7 +9,6 @@ public class View : MonoBehaviour
     private void OnEnable()
     {
         _timer.ValueChanged += DisplayValue;
-        _text.text = "0";
     }
 
     private void OnDisable()
