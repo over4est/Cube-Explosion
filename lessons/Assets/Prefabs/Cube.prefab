@@ -146,6 +146,5 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 660735a3db51ca649ba8f179175ed428, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _prefab: {fileID: 6173371787600541118}
-  _explosionForce: 500
-  _explosionRadius: 10
+  _spawner: {fileID: 7628311822801890798, guid: 9634f58e30430044f9098c4246293381, type: 3}
+  _exploder: {fileID: 4779527446120917222, guid: 4c8e09672e655084182d9d854457dc12, type: 3}

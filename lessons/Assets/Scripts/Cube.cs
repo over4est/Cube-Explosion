@@ -3,17 +3,17 @@ using UnityEngine;
 
 public class Cube : MonoBehaviour
 {
-    [SerializeField] private GameObject _prefab;
-    [SerializeField] private float _explosionForce;
-    [SerializeField] private float _explosionRadius;
+    [SerializeField] private Spawner _spawner;
+    [SerializeField] private Exploder _exploder;
 
-    private float _minSpawnAmount = 2f;
-    private float _maxSpawnAmount = 6f;
-    private float _reductionFactor = 0.5f;
+    private Cube _cube;
     private List<Rigidbody> _copyes = new List<Rigidbody>();
+
+    public float SplitChance { get; private set; } = 1;
 
     private void Awake()
     {
+        _cube = GetComponent<Cube>();
         Material material = GetComponent<MeshRenderer>().material;
         material.color = Random.ColorHSV();
     }
@@ -22,30 +22,15 @@ public class Cube : MonoBehaviour
     {
         Destroy(gameObject);
 
-        if (Random.value <= transform.localScale.x)
+        if (Random.value <= SplitChance)
         {
-            SplitUp();
-            Explode();
+            _spawner.Spawn(_cube, _copyes);
+            _exploder.Explode(_copyes);
         }
     }
 
-    private void Explode()
+    public void ReduceSplitChance(float originalChance, float reductionFactor)
     {
-        foreach (var rigidbody in _copyes)
-        {
-            rigidbody.AddExplosionForce(_explosionForce, transform.position, _explosionRadius);
-        }
-    }
-
-    private void SplitUp()
-    {
-        for (int i = 0; i < Random.Range(_maxSpawnAmount, _minSpawnAmount); i++)
-        {
-            var clone = Instantiate(_prefab);
-
-            clone.transform.localScale = transform.localScale * _reductionFactor;
-
-            _copyes.Add(clone.GetComponent<Rigidbody>());
-        }
+        SplitChance = originalChance * reductionFactor;
     }
 }
