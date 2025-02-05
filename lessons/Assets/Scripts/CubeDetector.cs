@@ -2,8 +2,6 @@ using UnityEngine;
 
 public class CubeDetector : MonoBehaviour
 {
-    private Vector3 _camera;
-
     public bool TryGetCube(out Cube cube)
     {
         Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
