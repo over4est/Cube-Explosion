@@ -366,6 +366,7 @@
 "Assets/Scripts/Exploder.cs"
 "Assets/Scripts/InputReader.cs"
 "Assets/Scripts/Spliter.cs"
+"Assets/Scripts/TargetsFinder.cs"
 -langversion:9.0
 /deterministic
 /optimize-

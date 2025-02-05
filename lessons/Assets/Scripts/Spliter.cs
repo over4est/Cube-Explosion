@@ -6,25 +6,24 @@ public class Spliter : MonoBehaviour
     [SerializeField] private InputReader _inputReader;
     [SerializeField] private CubeDetector _cubeDetector;
     [SerializeField] private Exploder _exploder;
+    [SerializeField] private TargetsFinder _targetsFinder;
 
     private float _minSpawnAmount = 2f;
     private float _maxSpawnAmount = 6f;
     private float _reductionFactor = 0.5f;
-    private List<Rigidbody> _cubeCopyes = new List<Rigidbody>();
+    private float _increasmentFactor = 2f;
 
     private void Update()
     {
         if (_inputReader.GetMousePressed && _cubeDetector.TryGetCube(out Cube cube))
         {
-            Split(cube, _cubeCopyes);
-            _exploder.Explode(_cubeCopyes);
+            Split(cube);
         }
     }
 
-    private void Split(Cube original, List<Rigidbody> rigidbodies)
+    private void Split(Cube original)
     {
         float splitAmount = Random.Range(_minSpawnAmount, _maxSpawnAmount);
-        _cubeCopyes = new List<Rigidbody>();
 
         Destroy(original.gameObject);
 
@@ -34,10 +33,16 @@ public class Spliter : MonoBehaviour
             {
                 var clone = Instantiate(original, original.transform.position, Quaternion.identity);
                 clone.transform.localScale = original.transform.localScale * _reductionFactor;
-                clone.ReduceSplitChance(original.SplitChance, _reductionFactor);
 
-                rigidbodies.Add(clone.GetComponent<Rigidbody>());
+                clone.ReduceSplitChance(original, _reductionFactor);
+                clone.IncreaseExplosionEffect(original, _increasmentFactor);
             }
+        }
+        else
+        {
+            List<Rigidbody> targets = _targetsFinder.GetExplodableObject(original);
+
+            _exploder.Explode(original, targets);
         }
     }
 }
