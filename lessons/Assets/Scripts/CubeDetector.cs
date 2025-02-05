@@ -4,11 +4,6 @@ public class CubeDetector : MonoBehaviour
 {
     private Vector3 _camera;
 
-    private void Start()
-    {
-        _camera = GetComponent<Camera>().transform.position;
-    }
-
     public bool TryGetCube(out Cube cube)
     {
         Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
