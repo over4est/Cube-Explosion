@@ -363,6 +363,7 @@
 "Assets/Scripts/ColorChanger.cs"
 "Assets/Scripts/Cube.cs"
 "Assets/Scripts/CubeDetector.cs"
+"Assets/Scripts/CubeSpawner.cs"
 "Assets/Scripts/Exploder.cs"
 "Assets/Scripts/InputReader.cs"
 "Assets/Scripts/Spliter.cs"

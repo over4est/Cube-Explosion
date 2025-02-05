@@ -3,6 +3,7 @@ using UnityEngine;
 
 public class Spliter : MonoBehaviour
 {
+    [SerializeField] private CubeSpawner _spawner;
     [SerializeField] private InputReader _inputReader;
     [SerializeField] private CubeDetector _cubeDetector;
     [SerializeField] private Exploder _exploder;
@@ -10,33 +11,43 @@ public class Spliter : MonoBehaviour
 
     private float _minSpawnAmount = 2f;
     private float _maxSpawnAmount = 6f;
-    private float _reductionFactor = 0.5f;
-    private float _increasmentFactor = 2f;
+    private float _splitFactor = 0.5f;
+    private float _scaleFactor = 0.5f;
+    private float _explosionFactor = 2f;
+    private List<Rigidbody> _copyRigidbodies = new List<Rigidbody>();
 
-    private void Update()
+    private void OnEnable()
     {
-        if (_inputReader.GetMousePressed && _cubeDetector.TryGetCube(out Cube cube))
-        {
-            Split(cube);
-        }
+        _inputReader.LeftMouseButtonPressed += Split;
     }
 
-    private void Split(Cube original)
+    private void OnDisable()
     {
+        _inputReader.LeftMouseButtonPressed -= Split;
+    }
+
+    private void Split()
+    {
+        if (!_cubeDetector.TryGetCube(out Cube original))
+        {
+            return;
+        }
+
         float splitAmount = Random.Range(_minSpawnAmount, _maxSpawnAmount);
 
-        Destroy(original.gameObject);
+        _copyRigidbodies = new List<Rigidbody>();
 
         if (Random.value <= original.SplitChance)
         {
             for (int i = 0; i < splitAmount; i++)
             {
-                var clone = Instantiate(original, original.transform.position, Quaternion.identity);
-                clone.transform.localScale = original.transform.localScale * _reductionFactor;
+                Cube copy = _spawner.Spawn(original, _scaleFactor, _splitFactor, _explosionFactor);
+                Rigidbody rigidbody = copy.GetComponent<Rigidbody>();
 
-                clone.ReduceSplitChance(original, _reductionFactor);
-                clone.IncreaseExplosionEffect(original, _increasmentFactor);
+                _copyRigidbodies.Add(rigidbody);
             }
+
+            _exploder.ExplodeCopyes(_copyRigidbodies);
         }
         else
         {
@@ -44,5 +55,7 @@ public class Spliter : MonoBehaviour
 
             _exploder.Explode(original, targets);
         }
+
+        Destroy(original.gameObject);
     }
 }
