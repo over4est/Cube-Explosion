@@ -13,14 +13,14 @@ public class Cube : MonoBehaviour
         Rigidbody = GetComponent<Rigidbody>();
     }
 
-    public void ReduceSplitChance(Cube original, float reductionFactor)
+    public void ReduceSplitChance(float originalSplitChance, float reductionFactor)
     {
-        SplitChance = original.SplitChance * reductionFactor;
+        SplitChance = originalSplitChance * reductionFactor;
     }
 
-    public void IncreaseExplosionEffect(Cube original, float increasmentFactor)
+    public void IncreaseExplosionEffect(float originalPower, float originalRadius, float increasmentFactor)
     {
-        ExplosionPower = original.ExplosionPower * increasmentFactor;
-        ExlosionRadius = original.ExlosionRadius * increasmentFactor;
+        ExplosionPower = originalPower * increasmentFactor;
+        ExlosionRadius = originalRadius * increasmentFactor;
     }
 }

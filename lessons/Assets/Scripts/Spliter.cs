@@ -14,7 +14,6 @@ public class Spliter : MonoBehaviour
     private float _splitFactor = 0.5f;
     private float _scaleFactor = 0.5f;
     private float _explosionFactor = 2f;
-    private List<Rigidbody> _copyRigidbodies = new List<Rigidbody>();
 
     private void OnEnable()
     {
@@ -28,26 +27,24 @@ public class Spliter : MonoBehaviour
 
     private void Split()
     {
-        if (!_cubeDetector.TryGetCube(out Cube original))
+        if (_cubeDetector.TryGetCube(out Cube original) == false)
         {
             return;
         }
 
+        List<Rigidbody> copyRigidbodies = new List<Rigidbody>();
         float splitAmount = Random.Range(_minSpawnAmount, _maxSpawnAmount);
-
-        _copyRigidbodies = new List<Rigidbody>();
 
         if (Random.value <= original.SplitChance)
         {
             for (int i = 0; i < splitAmount; i++)
             {
                 Cube copy = _spawner.Spawn(original, _scaleFactor, _splitFactor, _explosionFactor);
-                Rigidbody rigidbody = copy.GetComponent<Rigidbody>();
 
-                _copyRigidbodies.Add(rigidbody);
+                copyRigidbodies.Add(copy.Rigidbody);
             }
 
-            _exploder.ExplodeCopyes(_copyRigidbodies);
+            _exploder.Explode(copyRigidbodies);
         }
         else
         {

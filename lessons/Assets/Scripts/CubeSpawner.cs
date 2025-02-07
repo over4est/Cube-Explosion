@@ -7,8 +7,8 @@ public class CubeSpawner : MonoBehaviour
         var clone = Instantiate(original, original.transform.position, Quaternion.identity);
         clone.transform.localScale = original.transform.localScale * scaleFactor;
 
-        clone.ReduceSplitChance(original, splitFactor);
-        clone.IncreaseExplosionEffect(original, explosionFactor);
+        clone.ReduceSplitChance(original.SplitChance, splitFactor);
+        clone.IncreaseExplosionEffect(original.ExplosionPower, original.ExlosionRadius, explosionFactor);
 
         return clone;
     }

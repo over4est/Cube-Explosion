@@ -14,7 +14,7 @@ public class Exploder : MonoBehaviour
         }
     }
 
-    public void ExplodeCopyes(List<Rigidbody> copyes)
+    public void Explode(List<Rigidbody> copyes)
     {
         foreach (Rigidbody rigidbody in copyes)
         {

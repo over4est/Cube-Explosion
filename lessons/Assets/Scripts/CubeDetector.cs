@@ -14,9 +14,8 @@ public class CubeDetector : MonoBehaviour
         Ray ray = _mainCamera.ScreenPointToRay(Input.mousePosition);
         cube = null;
 
-        if (Physics.Raycast(ray, out RaycastHit hitInfo) && hitInfo.transform.GetComponent<Cube>())
+        if (Physics.Raycast(ray, out RaycastHit hitInfo) && hitInfo.transform.TryGetComponent<Cube>(out cube))
         {
-            cube = hitInfo.transform.GetComponent<Cube>();
             return true;
         }
 
